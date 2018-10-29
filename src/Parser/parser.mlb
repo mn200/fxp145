@@ -1,0 +1,17 @@
+../config.sml;
+../Util/util.mlb
+../Util/SymDict/symdict.mlb
+../Unicode/Chars/unicode-chars.mlb
+../Unicode/Uri/uri.mlb
+../Unicode/encoding.sml
+../Unicode/Decode/decode.mlb
+Error/error.mlb
+Dfa/dfa.mlb
+Base/base.mlb
+Params/params.mlb
+
+entities.sml
+version.sml
+
+Dtd/dtd.mlb
+Parse/parse.mlb

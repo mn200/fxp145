@@ -1,0 +1,9 @@
+$(SML_LIB)/basis/basis.mlb
+../../Util/util.mlb
+../Chars/unicode-chars.mlb
+../encoding.sml
+
+encodeBasic.sml
+encodeError.sml
+encodeMisc.sml
+encode.sml

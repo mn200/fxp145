@@ -1,0 +1,8 @@
+$(SML_LIB)/basis/basis.mlb
+../../Util/util.mlb
+../../Util/Symdict/symdict.mlb
+uniChar.sml
+dataDict.sml
+charClasses.sml
+uniRanges.sml
+uniClasses.sml

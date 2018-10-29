@@ -1,0 +1,13 @@
+$(SML_LIB)/basis/basis.mlb
+../Chars/unicode-chars.mlb
+../Uri/uri.mlb
+../encoding.sml
+decodeFile.sml
+decodeError.sml
+decodeMisc.sml
+decodeUtil.sml
+decodeUcs2.sml
+decodeUcs4.sml
+decodeUtf8.sml
+decodeUtf16.sml
+decode.sml

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>fxp - a Functional XML Parser</TITLE>
+  </HEAD>
+  
+  <BODY BGCOLOR=WHITE>
+    <H1>
+      <IMG ALIGN=MIDDLE BORDER=0 SRC="Images/fxp-shadow.jpg" ALT="fxp">
+      The Functional XML Parser</H1>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2>What's New?</H2>
+    June 8, 2000: Release of version <A HREF="version.html#1.4.1">1.4.1</A>. This is
+    a bug-fix release.
+    <P>
+    February 18, 2000: Release of 
+    <A HREF="http://www.informatik.uni-trier.de/~neumann/Fxgrep/"><I>fxgrep</I></A>, 
+    the Functional XML Querying Tool. 
+    <P>
+    February 18, 2000: Release of version <A HREF="version.html#1.4">1.4</A>  with:
+    <UL>
+      <LI>Improved handling of wrong end-tags/invalid character data
+      <LI>Slight change in the programming interface.
+    </UL>	    
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2>Contents</H2>
+    <TABLE>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#FXP">About <I>fxp</I></A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="version.html"><I>fxp</I> Versions and Changes</A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#GET">Where to get <I>fxp</I></A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#INSTALL">How to install <I>fxp</I></A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD>Example Applications: 
+	  <A HREF="fxp.html"><I>fxp</I></A>,
+	  <A HREF="fxcanon.html"><I>fxcanon</I></A>,
+	  <A HREF="fxcopy.html"><I>fxcopy</I></A>,
+	  <A HREF="fxesis.html"><I>fxesis</I></A>, and
+	  <A HREF="fxviz.html"><I>fxviz</I></A>.
+    </TABLE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H3><A NAME=FXP>What is <I>fxp</I>?</A></H3>
+    <I>fxp</I> is a validating <A HREF="http://www.w3.org/TR/REC-xml">XML</A> 
+    parser written completely in the functional programming language SML. 
+    It has a <A HREF="#API">programming interface</A> allowing for production 
+    of XML applications based on <I>fxp</I>.
+    It comes with four example applications: 
+    <TABLE>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o"></TD>
+	<TD><A HREF="fxp.html"><I>fxp</I></A>, the pure parser. It parses 
+	a document and finds well-formedness errors, validity errors and other 
+	problems;</TD>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o"></TD>
+	<TD><A HREF="fxcanon.html"><I>fxcanon</I></A> produces an equivalent
+	  canonical XML document. 
+	  <A HREF="http://www.jclark.com/xml/canonxml.html">Canonical XML</A> was 
+	  invented by <A HREF="http://www.jclark.com">James Clark</A> for testing 
+	  XML parsers. It contains only the information a processor is required
+	  to pass to the application; 
+	</TD>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o"></TD>
+	<TD><A HREF="fxcopy.html"><I>fxcopy</I></A> reproduces the document 
+	  parsed by <I>fxp</I>. The copy can be generated in a different
+	  encoding than the input, and can be normalized in different ways
+	  concerning, e.g., expansion of entity references;
+	</TD>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o"></TD>
+	<TD><A HREF="fxesis.html"><I>fxesis</I></A> adds a backend to 
+	<I>fxp</I>, producing an output similar to 
+	  <A HREF="http://www.jclark.com/sp/nsgmls.htm"><I>nsgmls</I></A>'s
+	  ESIS (Element Structure Information Set) output;</TD>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o"></TD>
+	<TD><A HREF="fxviz.html"><I>fxviz</I></A> is an XML tree visualizer. 
+	  It produces a graph description suitable as input to Georg Sander's     
+	  <A HREF="ftp://ftp.cs.uni-sb.de/pub/graphics/vcg/"><I>vcg</I></A>. 
+	</TD>
+    </TABLE>
+    More <A HREF="features.html">features</A> of <I>fxp</I> are 
+    <A HREF="features.html">here</A>. 
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H3><A NAME=GET></A>Downloading <I>fxp</I></H3>
+    The source code for <I>fxp</I> can be downloaded by 
+    <A HREF="ftp://ftp.informatik.uni-trier.de/pub/users/Neumann">ftp</A> or
+    <A HREF="fxp.tar.gz">http</A>. The Copyright note is 
+    <A HREF="COPYRIGHT">here</A>.
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H3><A NAME=INSTALL></A>Installation instructions</H3>
+    In order to install <I>fxp</I>, you need an SML compiler. 
+    It has been tested with version 110.9.1 of 
+    <A HREF="http://cm.bell-labs.com/cm/cs/what/smlnj/">SML of New Jersey</A>,
+    but it might also run with other versions. The compiler must have the
+    compilation manager (CM) built in, which is the default when installing
+    SML-NJ. We successfully compiled <I>fxp</I> on Linux with libc5, 
+    Digital Unix 4.0 and Solaris 2.4/6. For other unices we expect no problems;
+    compiling with the Windows version of SML-NJ has not been tried.
+    <P>These are the steps for installing <I>fxp</I> under Unix:
+    <OL>
+      <LI><A HREF="#GET">Download</A> the latest version of <I>fxp</I>;
+      <LI>Unpack the sources, and change to the <I>fxp</I> directory, e.g.:
+	<pre>
+    gunzip -c fxp-1.4.tar.gz | tar xf -
+    cd fxp-1.4</pre>
+      <LI>Read the <SAMP>COPYRIGHT</SAMP>;
+      <LI>Edit the <SAMP>Makefile</SAMP> according to your needs. Probably you will only have
+	to change the following:
+	<UL>
+	  <LI><SAMP>INSTALL_PROGS</SAMP> is the list of programs to be installed. 
+	    fxlib is only required if you want to develop applications with fxp. 
+	  <LI><SAMP>FXP_BINDIR</SAMP> is where the executables 
+	    are installed;
+	  <LI><SAMP>FXP_LIBDIR</SAMP> is where other files needed by 
+	    <I>fxp</I> - the heap images and the library -- are installed;
+	  <LI><SAMP>SML_BINDIR</SAMP> is the directory where the SML executables 
+	    are found. It must contain the <SAMP>.arch-n-opsys</SAMP> script from 
+	    the SML-NJ distribution, so make sure that this is where SML-NJ is
+	    <EM>physically</EM> installed;
+	  <LI><SAMP>SML_EXEC</SAMP> is the name of the SML executable. This is the 
+	    program that is called for generating the heap image and at execution
+	    of <I>fxp</I>. If <SAMP>sml</SAMP> will be in your <SAMP>PATH</SAMP>
+	    at execution time, you don't need the full path here.
+	  <LI><SAMP>SML_MAKEDEF</SAMP> is for defining the <SAMP>make</SAMP> command
+	    in SML. After version 110.0.3, SML-NJ changed the type of 
+	    <SAMP>CM.make'</SAMP>. Therefore it is wrapped into the <SAMP>make</SAMP>
+	    defined by this variable. For working versions of SML-NJ, use the
+	    second variant of this definition.
+	</UL>
+      <LI>Edit the file <SAMP>src/config.sml</SAMP> according to your needs. 
+	Currently only a single value can be configured here:
+	<UL>
+	  <LI><SAMP>retrieveCommand</SAMP> is the command to be used by <I>fxp</I>
+	    for retrieving a remote URI from the internet and storing it in a 
+	    temporary file on the local file system. It is a string value and 
+	    should contain the strings <SAMP>%1</SAMP> and <SAMP>%2</SAMP>, where
+	    <UL>
+	      <LI><SAMP>%1</SAMP> is replaced by the URI;
+	      <LI><SAMP>%2</SAMP> is replaced by the local filename. 
+	    </UL>
+	    It is recommended that the command exits with failure in case the 
+	    URI cannot be retrieved. If the command generates a HTML error 
+	    message instead (like, e.g., <SAMP>"lynx -source %1 > %2"</SAMP>),
+	    this HTML file is considered to be XML and will probably cause a 
+	    mess of parsing errors. If you don't need URI retrieval, use 
+	    <SAMP>"exit 1"</SAMP> which always fails on Unix. 
+	    Sensible values are, e.g:
+	    <UL>
+	      <LI><SAMP>"<A HREF="ftp://gnjilux.cc.fer.hr/pub/unix/util/wget/">wget</A>
+		  -qO %2 %1"</SAMP>
+	      <LI><SAMP>"<A HREF="ftp://sunsite.unc.edu/pub/Linux/apps/www/mirroring/got_it-0.34.tar.gz">got_it</A> 
+		  -o %2 %1"</SAMP>
+	      <LI><SAMP>"<A HREF="ftp://sunsite.unc.edu/pub/Linux/apps/www/mirroring/urlget-3.12.tar.gz">urlget</A> 
+		  -s -o %2 %1"</SAMP>
+	    </UL>
+	</UL>
+      <LI>Compile <I>fxp</I> by typing <SAMP>make</SAMP>; 
+      <LI>Install <I>fxp</I> by typing <SAMP>make install</SAMP>. 
+      <LI>If you want to use <I>fxviz</I>, you should also install
+	<A HREF="ftp://ftp.cs.uni-sb.de/pub/graphics/vcg/"><I>vcg</I></A>. 
+    </OL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H3><A NAME=API><I>fxp</I>'s Programming Interface</A></H3>
+    The programming interface to <I>fxp</I> is not documented yet.
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <ADDRESS>
+      <A HREF="http://www.informatik.uni-trier.de/~neumann/">A. Neumann</A> 
+      (<A HREF="mailto:neumann@PSI.Uni-Trier.DE">neumann@PSI.Uni-Trier.DE</A>) 
+    </ADDRESS>
+  </BODY>
+</HTML>

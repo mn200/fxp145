@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>fxp - The Program fxcopy</TITLE>
+  </HEAD>
+
+  <BODY BGCOLOR=WHITE>
+    <H1>
+      <A HREF="index.html"><IMG ALIGN=MIDDLE BORDER=0 SRC="Images/fxp-shadow.jpg" ALT="fxp"></A>
+      The Program <I>fxcopy</I>
+    </H1>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#DESC">Description</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA">Options by Example</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#OPT">Summary of Options</A>
+      </TR>
+    </TABLE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=DESC>Description</A></H2>
+
+    <I>fxcopy</I> is a validating XML processor. It reads an XML document
+    and produces a copy of it. This copy can be in a different encoding,
+    and can be normalized in several ways by, e.g., expanding entity 
+    references.
+    <P>
+    The typical invocation of <I>fxcopy</I> is 
+    <BLOCKQUOTE><PRE>fxcopy [option ...] [infile]</PRE></BLOCKQUOTE>
+    If <SAMP>infile</SAMP> is given, <I>fxcopy</I> reads its input document
+    from that file, otherwise <I>fxcopy</I> reads from standard input. 
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=EXA>Options by Example</A></H2>
+    
+    In addition to the options of <A HREF="fxp.html#EXA"><I>fxp</I></A>,
+    <I>fxcopy</I> accepts arguments in the following two areas:
+    <!--
+    <I>fxcopy</I> understands all options documented for 
+    <A HREF="fxp.html#EXA"><I>fxp</I></A>; the additional options 
+    are described now.
+    -->
+    <P>
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-OUT">Controlling Output</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-REF">Expansion of References</A> 
+	  in the <A HREF="#EXP-INST">Document Instance</A> and 
+	  in the <A HREF="#EXP-SUB">Declaration Subset</A>
+      </TR>
+    </TABLE>
+
+    <H4><A NAME=EXA-OUT>Controlling Output</A></H4>
+    By default, <I>fxcopy</I> writes to standard output, in the same encoding 
+    as the input document. This can be changed by the following options:
+    <UL>
+      <LI>
+	The output can be redirected to a file named <SAMP>outfile</SAMP> via the
+	option <SAMP>--output=outfile</SAMP> or, for short, <SAMP>-o&nbsp;outfile</SAMP>.
+      <LI>
+	If an output encoding different from the input encoding is desired, 
+	use the <SAMP>--output-encoding=enc</SAMP> option, where 
+	<SAMP>enc</SAMP> is one of <I>fxcopy</I>'s 
+	<A HREF="features.html#ENC">supported</A> encodings. 
+    </UL>
+    For instance, 
+    <BLOCKQUOTE><PRE>
+fxcopy -o output.utf8 --output-encoding=UTF-8 input.ascii</PRE>
+    </BLOCKQUOTE>
+    recodes the file <SAMP>input.ascii</SAMP> to UTF-8 and writes it to the file 
+    <SAMP>input.utf8</SAMP>.
+    
+    <H4><A NAME=EXA-REF>Expansion of References</A></H4>
+    By default <I>fxcopy</I> produces a document that is for the most parts
+    identical to the input, i.e.,
+    <UL>
+      <LI>all character references and general entity references in the document
+	instance are preserved as far as the output encoding admits;
+      <LI>attribute values are reproduced literally, i.e., without being normalized
+	and without replacing entity references;
+      <LI>the internal subset of the DTD is reproduced in an equivalent form; it 
+	is not reproduced literally in that white space is not preserved but 
+	normalized to a canonical form;
+      <LI>entity values in entity declarations are reproduced literally, i.e., 
+	without replacing entities references;
+      <LI>the external subset is not copied to the output, but the external identifier
+	of the document type declaration is preserved.
+    </UL>
+    This behavior can be affected by options.
+    
+    <H5><A NAME=EXP-INST>Reference Expansion in the Document Instance</A></H5> 
+    
+    Expansion of references in content can be controlled by the 
+    <SAMP>--expand-ref-content</SAMP> option. Its takes as argument a list
+    of keywords each specifying a class of references to expand, where
+    <BLOCKQUOTE>
+      <TABLE CELLSPACING=0 CELLPADDING=0>
+	<TR VALIGN=TOP>
+	  <TD><SAMP>char</SAMP>&nbsp;&nbsp;
+	  <TD>means that a character reference shall be replaced by the 
+	    described character unless that character cannot be represented 
+	    directly in the output encoding.
+	<TR VALIGN=TOP>
+	  <TD><SAMP>int</SAMP>
+	  <TD>means that references to internal general entities shall be 
+	    substituted with their replacement text, unless the entity is
+	    undeclared (which may only happen in non-validating mode).
+	<TR VALIGN=TOP>
+	  <TD><SAMP>ext</SAMP>
+	  <TD>means references to external parsed entities shall be 
+	    substituted by the content of the file they point to, unless
+	    the entity is undeclared (which may only happen in non-validating
+	    mode).
+      </TABLE>
+    </BLOCKQUOTE>
+    Alternatively, we can use <SAMP>--expand-ref-content</SAMP> for specifying
+    all of the above. 
+    <P>
+      The second place within the document instance where references can occur is
+      attribute values. Furthermore, attribute values are normalized according to
+      their attribute type after replacement of references. 
+      By default, <I>fxcopy</I> reproduces attribute values literally. Given the
+      <SAMP>--expand-att-vals</SAMP> option, it outputs the normalized value
+      instead. 
+    <P>
+      As an example for expansion in the document instance assume the following 
+      declarations in the DTD:
+    <BLOCKQUOTE><PRE>
+&lt;!ENTITY q "quote sign"&gt;
+&lt;!ENTITY int "internal entity"&gt;
+&lt;!ENTITY ext SYSTEM "ext.ent"&gt;
+&lt;!ATTLIST a x NMTOKENS #IMPLIED
+            y CDATA    #IMPLIED&gt;</PRE>
+    </BLOCKQUOTE>
+    and the content of the file <SAMP>ext.ent</SAMP> is the string
+    "<SAMP>external entity</SAMP>". Let us consider the following 
+    document fragment: 
+    <BLOCKQUOTE><PRE>
+&lt;a x=" a   b " y="two &amp;q;s: &amp;#x27; and &amp;#x22;"&gt;    
+here is a character reference: &amp;#64;
+here is an &amp;int;           
+here is an &amp;ext;
+&lt;/a&gt;</PRE>
+    </BLOCKQUOTE>
+    Running <SAMP>fxcopy --expand-refs-content=char,int</SAMP> produces this:
+    <BLOCKQUOTE><PRE>
+&lt;a x=" a   b " y="two &amp;q;s: &amp;#x27; and &amp;#x22;"&gt;    
+here is a character reference: @
+here is an internal entity           
+here is an &amp;ext;
+&lt;/a&gt;</PRE>
+    </BLOCKQUOTE>
+    whereas <SAMP>fxcopy --expand-refs-content=ext --expand-att-vals</SAMP> yields
+    <BLOCKQUOTE><PRE>
+&lt;a x="a b" y="two quote signs: ' and &amp;#x22;"&gt;
+here is a character reference: &amp;#64;
+here is an &amp;int;           
+here is an external entity
+&lt;/a&gt;</PRE>
+    </BLOCKQUOTE>
+    Note that the <SAMP>&amp;#x22;</SAMP> in the attribute value is not 
+    replaced by the <SAMP>"</SAMP> sign because then it would be recognized 
+    as the end of the attribute value literal.
+
+    <H5><A NAME=EXP-SUB>Reference Expansion in the Declaration Subset</A></H5>
+    
+    Normally <I>fxcopy</I> reproduces only the internal subset of the document type,
+    preserving all references to parameter entities. This behavior can be changed
+    with the <SAMP>--expand-ents-subset</SAMP> option. Its argument indicates which
+    references shall be substitutes by their replacement text:
+    <BLOCKQUOTE>
+      <TABLE CELLSPACING=0 CELLPADDING=0>
+	<TR VALIGN=TOP>
+	  <TD><SAMP>int</SAMP>
+	  <TD>Expand all references to internal parameter entities. 
+	<TR VALIGN=TOP>
+	  <TD><SAMP>ext</SAMP>
+	  <TD>Replace all references to external parameter entities with the content
+	    of file they point to. Note that this option implies 
+	    <A HREF="#EXP-ENT"><SAMP>--expand-ent-vals</SAMP></A> in order 
+	    to ensure well-formedness.
+	<TR VALIGN=TOP>
+	  <TD><SAMP>yes</SAMP>&nbsp;&nbsp;
+	  <TD>Expand references to internal and external parameter entities. 
+	    <SAMP>--expand-ents-subset</SAMP> is equivalent 
+	    <SAMP>--expand-ents-subset=yes</SAMP>
+	<TR VALIGN=TOP>
+	  <TD><SAMP>no</SAMP>
+	  <TD>Expand no parameter entity references at all.  
+      </TABLE>
+    </BLOCKQUOTE>
+    This applies to references occurring where a declaration could occur. It does not 
+    affect references within declarations which are expanded regardless of options.
+    <P>
+      The external subset can be viewed as a special reference. The 
+      <SAMP>--expand-ext-subset</SAMP> option makes <I>fxcopy</I> drop the external 
+      identifier from the document type declaration, and copy the content of the file 
+      it denotes to the end of the internal subset. As <SAMP>--expand-ents-subset=ext</SAMP>, 
+      this option implies <A HREF="#EXP-ENT"><SAMP>--expand-ent-vals</SAMP></A>.
+    <P>
+      <A NAME=EXP-ENT></A>
+      Usually, entity values in entity declarations are reproduced literally, i.e.,
+      without replacement of references. However, if a declaration is copied from 
+      an external entity to the internal subset, parameter entity references become
+      invalid in the entity value. Therefore, given the <SAMP>--expand-ent-vals</SAMP>
+      option, <I>fxcopy</I> substitutes the derived entity replacement text for the 
+      entity value. This does not contain parameter entity references (only if the 
+      %-sign was escaped with a character reference, but then it wasn't even recognized 
+      as a reference by the parser); it uses character references only for characters 
+      that can not be represented directly. 
+    <P>
+      For instance, consider the document <SAMP>exa-6.xml</SAMP>:
+    <BLOCKQUOTE><PRE>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE exa SYSTEM "exa-6.ext" [
+&lt;!ENTITY % int "&lt;!ELEMENT exa ANY&gt;"&gt;
+&lt;!ENTITY % ext SYSTEM "ext-6.decl"&gt;
+%int;
+%ext;
+]&gt;
+&lt;exa/&gt;</PRE>
+</BLOCKQUOTE>
+    where the content of the file <SAMP>exa-6.ext</SAMP> is
+    <BLOCKQUOTE><PRE>
+&lt;!ENTITY % vnum "1.0"&gt;
+&lt;!ENTITY % version "xml version %vnum;"&gt;</PRE>
+</BLOCKQUOTE>
+    and <SAMP>ext-6.decl</SAMP> contains 
+    <BLOCKQUOTE><PRE>
+&lt;!NOTATION text SYSTEM "/bin/cat"&gt;</PRE>
+    </BLOCKQUOTE>
+    Running <SAMP>fxcopy --expand-refs-subset=int exa-6.xml</SAMP> produces:
+    <BLOCKQUOTE><PRE>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE exa SYSTEM "exa-6.ext" [
+&lt;!ENTITY % int "&lt;!ELEMENT exa ANY&gt;"&gt;
+&lt;!ENTITY % ext SYSTEM "ext-6.decl"&gt;
+&lt;!ELEMENT exa ANY&gt;
+%ext;
+]&gt;
+&lt;exa/&gt;</PRE>
+    </BLOCKQUOTE>
+    Note that only the internal reference <SAMP>%int;</SAMP> was expanded.
+    On the other hand, if we run 
+    <SAMP>fxcopy&nbsp;--expand-refs-subset=ext&nbsp;exa-6.xml</SAMP>
+    we get:
+    <BLOCKQUOTE><PRE>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE exa SYSTEM "exa-6.ext" [
+&lt;!ENTITY % int "&lt;!ELEMENT exa ANY&gt;"&gt;
+&lt;!ENTITY % ext SYSTEM "ext-6.decl"&gt;
+%int;
+&lt;!NOTATION text SYSTEM "/bin/cat"&gt;
+]&gt;
+&lt;exa/&gt;</PRE>
+    </BLOCKQUOTE>
+    Finally, using <SAMP>fxcopy&nbsp;--expand-ext-subset&nbsp;exa-6.xml</SAMP> yields
+    <BLOCKQUOTE><PRE>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE exa [
+&lt;!ENTITY % int "&lt;!ELEMENT exa ANY&gt;"&gt;
+&lt;!ENTITY % ext SYSTEM "ext-6.decl"&gt;
+%int;
+%ext;
+&lt;!ENTITY % vnum "1.0"&gt;
+&lt;!ENTITY % version "xml version 1.0"&gt;
+]&gt;
+&lt;exa/&gt;</PRE>
+    </BLOCKQUOTE>
+    Note that the entity value in the last entity declaration has been expanded,
+    because the <SAMP>--expand-ent-vals</SAMP> option was implied by 
+    <SAMP>--expand-ext-subset</SAMP>. If we supersede this with 
+    <SAMP>--expand-ext-subset=no</SAMP>, we get
+    <BLOCKQUOTE><PRE>
+&lt;!ENTITY % version "xml version %vnum;"&gt;</PRE>
+    </BLOCKQUOTE>
+    but this is not well-formed:
+    <BLOCKQUOTE><PRE>
+&gt; fxcopy --expand-ext-subset --expand-ent-vals=no exa-6.xml | fxp
+[&lt;stdin&gt;:8.33] Error: a parameter entity reference is not allowed in a 
+    declaration in the internal subset.</PRE>
+    </BLOCKQUOTE>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=OPT>Summary of Command Line Options</A></H2>
+    
+    Each option can be one of:
+    <UL>
+      <LI>A file name specifying the input document. 
+	Only one input document may be specified.
+      <LI>A long option of the form <SAMP>--key[=arg]</SAMP>
+      <LI>A short option of the form <SAMP>-k</SAMP>, where <SAMP>k</SAMP> consists
+	of single character. If <SAMP>k</SAMP> consists of more than one character,
+	each character is assumed to be a short option itself (e.g., <SAMP>-vic</SAMP>
+	equals <SAMP>-v -i -c</SAMP>).
+      <LI>A short option with argument of the form <SAMP>-k arg</SAMP>, where 
+	<SAMP>k</SAMP> consists of a single character.
+      <LI>A negative short option of the form <SAMP>-nk</SAMP>, where <SAMP>k</SAMP> consists
+	of single character. If <SAMP>k</SAMP> consists of more than one character,
+	each character is assumed to be a negative short option itself (e.g., <SAMP>-nvic</SAMP>
+	equals <SAMP>-nv -ni -nc</SAMP>). If <SAMP>k</SAMP> is empty, then we have the 
+	(non-negative) short option  <SAMP>-n</SAMP>. 
+      <LI>The string <SAMP>--</SAMP>. This option is ignored, except that all remaining
+	options are interpreted as file names, whether they start with <SAMP>-</SAMP>
+	or not.
+    </UL>
+    
+    <I>fxcopy</I> understands all options documented for 
+    <A HREF="fxp.html#OPT"><I>fxp</I></A>; additionally, the following 
+    options are available:
+
+    <DL>
+      <DT><SAMP>-o fname</SAMP>
+      <DT><SAMP>--output=fname</SAMP>
+      <DD>
+	Write all output, except for errors and warnings, to the file named 
+	<SAMP>fname</SAMP>. If <SAMP>fname</SAMP> is <SAMP>-</SAMP>, the 
+	standard output is used. 
+	Defaults is <SAMP>-</SAMP>.
+      <DT>
+	<SAMP>--output-encoding=enc</SAMP>
+      <DD> 
+	Use encoding <SAMP>enc</SAMP> for generating the output. 
+  	<SAMP>enc</SAMP> must be a <A HREF="features.html#ENC">supported</A> 
+	encoding. Default is the encoding of the input document.
+	<P>
+
+      <DT>
+	<SAMP>--expand-refs-content[=key]</SAMP>
+      <DD>
+	Controls whether entity references in content are expanded, i.e., included
+	or preserved as references in the output. <SAMP>key</SAMP> is either a 
+	comma-separated list of 
+	<UL>
+	  <LI><SAMP>char</SAMP> for character references,
+	  <LI><SAMP>ext</SAMP> for references to external parsed entities, and
+	  <LI><SAMP>int</SAMP> for references to internal general entities;
+	</UL>
+	or it is <SAMP>yes</SAMP> for all or <SAMP>no</SAMP> for none of the above. 
+	If no <SAMP>key</SAMP> is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>. 
+      <DT>
+	<SAMP>--expand-refs-subset[=key]</SAMP>
+      <DD>
+	Controls whether parameter entity references in the internal or external 
+	subset are expanded, i.e., included or preserved as references in the output. 
+	<SAMP>key</SAMP> is one out of 
+	<UL>
+	  <LI><SAMP>yes</SAMP> for all references, 
+	  <LI><SAMP>int</SAMP> for references to internal entities, 
+	  <LI><SAMP>ext</SAMP> for references to external entities; 
+	    implies <SAMP>--expand-ent-vals</SAMP>; or 
+	  <LI><SAMP>no</SAMP> for no references at all
+	</UL>
+	to be expanded. 
+	If <SAMP>key</SAMP> is omitted, <SAMP>yes</SAMP> is assumed.
+	Default is <SAMP>no</SAMP>. 
+      <DT>
+	<SAMP>--expand-ext-subset[=(yes|no)]</SAMP>
+      <DD>
+	Controls whether the external subset shall be expanded, i.e., appended to 
+	the internal subset of the output while dropping its external identifier 
+	from the document type declaration.
+	<SAMP>yes</SAMP> implies <SAMP>--expand-ent-vals</SAMP>.
+	If no argument is given, <SAMP>yes</SAMP> is assumed.
+	Default is <SAMP>no</SAMP>.
+      <DT>
+	<SAMP>--expand-att-vals[=(yes|no)]</SAMP>
+      <DD> 
+	Controls whether attribute values are reproduced literally or in expanded
+	form, i.e., with all references expanded and white space normalized according
+	to the attribute type. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed.
+	Default is <SAMP>no</SAMP>.
+      <DT>
+	<SAMP>--expand-ent-vals[=(yes|no)]</SAMP>
+      <DD> 
+	Controls whether entity values are reproduced literally or in expanded
+	form, i.e., with all references expanded.
+	If no argument is given, <SAMP>yes</SAMP> is assumed.
+	Default is <SAMP>no</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--expand=key</SAMP>
+      <DD> 
+	Depending on <SAMP>key</SAMP>, equivalent to:
+	<TABLE>
+	  <TR VALIGN=TOP>
+	    <TD><SAMP>yes</SAMP>:</TD>
+	    <TD><SAMP>--expand-refs-content --expand-refs-subset --expand-ext-subset 
+		--expand-att-vals --expand-ent-vals</SAMP></TD>
+	    <TD></TD>
+	  </TR>
+	  <TR VALIGN=TOP>
+	    <TD><SAMP>no</SAMP>:</TD>
+	    <TD><SAMP>--expand-refs-content=no --expand-refs-subset=no 
+		--expand-ext-subset=no --expand-att-vals=no --expand-ent-vals=no</SAMP></TD>
+	  </TR>
+	  <TR VALIGN=TOP>
+	    <TD><SAMP>int</SAMP>:</TD>
+	    <TD><SAMP>--expand-refs-content=char,int --expand-refs-subset=int
+		--expand-ext-subset=no --expand-att-vals --expand-ent-vals=no</SAMP></TD>
+	  </TR>
+	  <TR VALIGN=TOP>
+	    <TD><SAMP>ext</SAMP>:</TD>
+	    <TD><SAMP>--expand-refs-content=ext --expand-refs-subset=yes --expand-ext-subset
+		--expand-att-vals=no --expand-ent-vals</SAMP></TD>
+	  </TR>
+	</TABLE>
+    </DL>      
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <ADDRESS>
+      <A HREF="http://www.informatik.uni-trier.de/~neumann/">A. Neumann</A> 
+      (<A HREF="mailto:neumann@PSI.Uni-Trier.DE">neumann@PSI.Uni-Trier.DE</A>) 
+    </ADDRESS>
+  </BODY>
+</HTML>

@@ -1,0 +1,12 @@
+$(SML_LIB)/basis/basis.mlb
+../../Util/util.mlb
+../../Util/Symdict/symdict.mlb
+dfaData.sml
+dfaError.sml
+dfaUtil.sml
+dfaPassOne.sml
+dfaPassTwo.sml
+dfaString.sml
+dfaOptions.sml
+dfaPassThree.sml
+dfa.sml

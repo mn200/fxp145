@@ -1,0 +1,11 @@
+use "catOptions.sml";
+use "catError.sml";
+use "catParams.sml";
+use "catData.sml";
+use "catFile.sml";
+use "socatParse.sml";
+use "catDtd.sml";
+use "catHooks.sml";
+use "catParse.sml";
+use "catalog.sml";
+use "catResolve.sml";

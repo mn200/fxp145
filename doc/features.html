@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN" -->
+<HTML>
+  <HEAD>
+    <TITLE>fxp - Features</TITLE>
+  </HEAD>
+
+  <BODY BGCOLOR=WHITE>
+    <H1>
+      <A HREF="index.html"><IMG ALIGN=MIDDLE BORDER=0 SRC="Images/fxp-shadow.jpg" ALT="fxp"></A>
+      Features
+    </H1>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#UNI">Unicode Support</A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#CAT">Catalog Support</A>
+    </TABLE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H1><A NAME=UNI>Unicode Support</A></H1>
+    
+    <I>fxp</I> has full support for Unicode and auto-detection of encoding 
+    of external XML entities. The <A NAME=ENC>supported</A> encodings are 
+    currently:
+    <P>
+    <TABLE WIDTH="90%" ALIGN=CENTER>
+      <TR VALIGN=TOP>
+	<TH>Encoding&nbsp;&nbsp;&nbsp;
+	<TH ALIGN=LEFT>Other recognized names
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>ASCII</SAMP>
+	<TD>
+	  <SAMP>ANSI_X3.4-1968</SAMP>, <SAMP>ANSI_X3.4-1986</SAMP>, 
+	  <SAMP>US-ASCII</SAMP>, <SAMP>US</SAMP>, <SAMP>ISO646-US</SAMP>, 
+	  <SAMP>ISO-IR-6</SAMP>, <SAMP>ISO_646.IRV:1991</SAMP>,
+	  <SAMP>IBM367</SAMP> and <SAMP>CP367</SAMP>
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>EBCDIC</SAMP>
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>LATIN1</SAMP>
+	<TD>
+	  <SAMP>ISO_8859-1:1987</SAMP>, <SAMP>ISO-8859-1</SAMP>, 
+	  <SAMP>ISO_8859-1</SAMP>, <SAMP>ISO-IR-100</SAMP>,
+	  <SAMP>CP819</SAMP>, <SAMP>IBM819</SAMP>, <SAMP>L1</SAMP>
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>UCS-4</SAMP>
+	<TD>
+	  <SAMP>ISO-10646-UCS-4</SAMP>
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>UCS-2</SAMP> 
+	<TD>
+	  <SAMP>ISO-10646-UCS-2</SAMP>
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>UTF-16</SAMP> 
+      <TR VALIGN=TOP>
+	<TD>
+	  <SAMP>UTF-8</SAMP>
+    </TABLE> 
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H1><A NAME=CAT>Catalog Support</A></H1>
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#CAT-OVER">Catalogs</A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#CAT-EXA">Options by Example</A>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#CAT-OPT">Summary of Options</A>
+    </TABLE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=CAT-OVER>Catalogs</A></H2>
+    <I>fxp</I> supports the Socat syntax of 
+    <A HREF="http://www.ccil.org/~cowan/XML/XCatalog.html">XML Catalog</A>. 
+    Catalogs are used for generating system identifiers from public 
+    identifiers (mapping), or for substituting system identifiers by
+    other system identifiers (remapping). Catalogs come in two syntaxes:
+    the Socat syntax is a subset of a catalog syntax used for SGML; the
+    XML syntax is an XML document instance. 
+    <H4>Syntax</H4>
+    There are five kinds of entries in a catalog:
+    <P>
+    <TABLE WIDTH="90%" ALIGN=CENTER>
+      <TR VALIGN=TOP>
+	<TH ALIGN=LEFT>Type
+	<TH ALIGN=LEFT>Socat/XML syntax
+	<TH ALIGN=LEFT>Meaning
+      <TR VALIGN=TOP>
+	<TD>base
+	<TD><SAMP>BASE</SAMP> <I>uri</I><BR>
+	  <SAMP>&lt;Base HRef="</SAMP><I>uri</I><SAMP>"></SAMP>
+	<TD>Specifies a URI to be used as a base 
+	  for succeeding relative URIs.
+      <TR VALIGN=TOP>
+	<TD>extend
+	<TD><SAMP>CATALOG</SAMP> <I>uri</I><BR>
+	  <SAMP>&lt;Extend HRef="</SAMP><I>uri</I><SAMP>"></SAMP>
+	<TD>Indicates an alternative catalog to be searched if the actual 
+	  catalog does not contain a matching entry.
+      <TR VALIGN=TOP>
+	<TD>delegate&nbsp;&nbsp;
+	<TD><SAMP>DELEGATE</SAMP> <I>prefix uri</I><BR>
+	  <SAMP>&lt;Delegate&nbsp;PublicId="</SAMP><I>prefix</I><SAMP>"&nbsp;HRef="</SAMP><I>uri</I><SAMP>"></SAMP>
+	<TD>Specifies an alternative catalog, but only for public identifiers
+	  beginning with <I>prefix</I>.
+      <TR VALIGN=TOP>
+	<TD>map
+	<TD><SAMP>PUBLIC</SAMP> <I>pubid uri</I><BR>
+	  <SAMP>&lt;Map&nbsp;PublicId="</SAMP><I>pubid</I><SAMP>"&nbsp;HRef="</SAMP><I>uri</I><SAMP>"></SAMP>
+	<TD>Maps a public identifier to a URI.
+      <TR VALIGN=TOP>
+	<TD>remap
+	<TD><SAMP>SYSTEM</SAMP> <I>src dst</I><BR>
+	  <SAMP>&lt;Remap&nbsp;SystemId="</SAMP><I>src</I><SAMP>"&nbsp;HRef="</SAMP><I>dst</I><SAMP>"></SAMP> 
+	<TD>Indicates that URI <I>dst</I> shall be used in the place of the 
+	  source URI <I>src</I>.
+    </TABLE>
+    <P>
+      If the XML syntax is used, the catalog is parsed in non-validating mode
+      and everything except for the start-tags of the above five elements is 
+      ignored. It is recommended, however, that the catalog be a valid XML document 
+      with a document type similar to <A HREF="Examples/xmlcat.dtd">this</A>.
+    <P>
+      Relative URIs are treated as relative to the catalog in which they 
+      appear, or if there was a preceding base entry, relative to the URI of 
+      that entry. The only exception is that the <I>src</I> URI in a remap
+      entry must be mapped exactly, ignoring any specified base. 
+
+    <H4>Example in Socat Syntax</H4>
+    If a catalog's file name ends in <SAMP>.SOC</SAMP> or <SAMP>.soc</SAMP>,
+    <I>fxp</I> assumes it is in Socat syntax, e.g.:
+    <BLOCKQUOTE><PRE>
+BASE     "/pub/dtd/w3c/"
+PUBLIC   "-//W3C//DTD Specification::19980910//EN" "spec.dtd"
+SYSTEM   "spec.dtd" "xmlspec.dtd"
+DELEGATE "ISO" "/pub/dtd/iso/iso.soc"
+CATALOG  "/pub/entities/ent.soc"
+PUBLIC   "ISO 8879:1986//ENTITIES Added Latin 1//EN" "/pub/iso/lat1.ent"
+SYSTEM   "isolat1.ent" "latin1.ent"</PRE>
+    </BLOCKQUOTE>
+
+    <H4>Example in XML Syntax</H4>
+    For XML syntax, the catalog must be a well-formed, but not necessarily 
+    valid XML document. I.e., if the catalog has more than one entry, there
+    must be at least one root element containing all the entries.
+    All textual data and elements other than the five catalog entries
+    are ignored. 
+    <BLOCKQUOTE><PRE>
+&lt;Catalog>
+  &lt;Base HRef="/pub/dtd/w3c/"/>
+  &lt;Map  PublicId="-//W3C//DTD Specification::19980910//EN" HRef="spec.dtd"/>
+  &lt;Remap SystemId="spec.dtd" HRef="xmlspec.dtd"/>
+  &lt;Delegate PublicId="ISO" HRef="/pub/dtd/iso/iso.soc"/>
+  &lt;Extend HRef="/pub/entities/ent.soc"/>
+  &lt;Map PublicId="ISO 8879:1986//ENTITIES Added Latin 1//EN" HRef="/pub/iso/lat1.ent"/>
+  &lt;Remap SystemId="isolat1.ent" HRef="latin1.ent"/>
+&lt;/Catalog></PRE>
+    </BLOCKQUOTE>
+    
+    <H4>Search Order</H4>
+    The search order is breadth-first, i.e., a matching map or remap entry 
+    is always preferred to a matching entry in an alternative catalog 
+    specified by a preceding delegate or extend entry. E.g., in the example
+    above the public identifier 
+    <SAMP>"ISO 8879:1986//ENTITIES Added Latin 1//EN"</SAMP> is mapped to
+    <SAMP>/pub/iso/lat1.ent</SAMP> even if the catalog 
+    <SAMP>/pub/entities/ent.soc</SAMP> contains a matching entry for it.
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=CAT-EXA>Catalog Options by Example</A></H2>
+
+    <H4>Catalog Search Path</H4>
+    A catalog to be used for resolving can be specified with the 
+    <SAMP>--catalog</SAMP> option. Repeating this option several times
+    is equivalent to concatenating all specified catalogs into one.
+    Note that, e.g, a matching entry in the second catalog overrides
+    a match in a catalog specified in a delegate or extend entry in the
+    first one: suppose that <SAMP>iso.soc</SAMP> contains the line
+    <BLOCKQUOTE><PRE>
+DELEGATE "ISO 8879:1986//ENTITIES" "8879.soc"</PRE>
+    </BLOCKQUOTE>
+    <SAMP>8879.soc</SAMP> contains 
+    <BLOCKQUOTE><PRE>
+PUBLIC   "ISO 8879:1986//ENTITIES Added Latin 1//EN" "/pub/iso/lat1.ent"</PRE>
+    </BLOCKQUOTE>
+    and <SAMP>ents.soc</SAMP> contains 
+    <BLOCKQUOTE><PRE>
+PUBLIC   "ISO 8879:1986//ENTITIES Added Latin 1//EN" "isolat1.ent"</PRE>
+    </BLOCKQUOTE>
+    Specifying <SAMP>--catalog=iso.soc --catalog=ents.soc</SAMP> makes 
+    <SAMP>"ISO 8879:1986//ENTITIES Added Latin 1//EN"</SAMP> resolve to
+    <SAMP>isolat1.ent</SAMP>, and not to <SAMP>/pub/iso/lat1.ent</SAMP>.
+
+    <H4>Resolving Strategy</H4>
+    A catalog may be used for several reasons: as a fall-back, i.e., for 
+    generating system identifiers if the information in the XML document 
+    itself is not sufficient; or as the default, overriding the system
+    identifiers specified in the DTD. 
+    By default, <I>fxp</I> tries to resolve an external identifier as 
+    follows:
+    <OL>
+      <LI>if a public identifier is present, then it is tried to be mapped
+	to a system identifier using the catalog; if this fails or no public
+	identifier was given, the declared system identifier is used;
+      <LI>the system identifier obtained by step 1 is tried to be remapped
+	by a matching catalog entry.
+    </OL>
+    This can be affected by the <SAMP>--catalog-priority</SAMP> option. This
+    option takes one of the following arguments:
+    <P>
+    <TABLE WIDTH="90%" ALIGN=CENTER>
+      <TR VALIGN=TOP>
+	<TD><SAMP>map</SAMP>
+	<TD>the default behaviour;
+	  for succeeding relative URIs.
+      <TR VALIGN=TOP>
+	<TD><SAMP>remap</SAMP>
+	<TD>first try to remap the declared system identifier; only if that
+	  fails proceed with step 1. 
+      <TR VALIGN=TOP>
+	<TD><SAMP>sys</SAMP>
+	<TD>if a system identifier is given, don't consider the catalog at 
+	  all; if there is no system identifier, proceed to steps 1 and 2.
+	  Note that in well-formed documents an external identifier must 
+	  always contain a system identifier. Therefore this applies only to
+	  external identifiers declared for notations.
+    </TABLE>
+    <P>
+      E.g., suppose you have the following declarations in the DTD:
+    <BLOCKQUOTE><PRE>
+&lt;ENTITY % isolat1 PUBLIC "ISO 8879:1986//ENTITIES Added Latin 1//EN" "isolat1.ent">
+&lt;NOTATION ps PUBLIC "PostScript Level 3"></PRE>
+    </BLOCKQUOTE>
+    By default, the external identifier for <SAMP>isolat1</SAMP> is mapped to
+    <SAMP>/pub/iso/lat1.ent</SAMP>. With <SAMP>--catalog-priority=remap</SAMP>
+    remapping of the declared system identifier comes first and yields 
+    <SAMP>latin1.ent</SAMP> (which is modified to 
+    <SAMP>/pub/dtd/w3c/latin1.ent</SAMP> due to the base entry in the 
+    catalog's first line). Giving option <SAMP>--catalog-priority=sys</SAMP> 
+    totally disables the catalog for this external identifier because it has
+    a system identifier. For notation <SAMP>ps</SAMP>, however, the catalog
+    is still consulted because its declaration lacks a system identifier.
+    <P>
+      Since remapping should be used with caution in publicly available 
+      catalogs it can be disabled with <SAMP>--catalog-remap=no</SAMP>. E.g., 
+      resolving public identifier 
+      <SAMP>"-//W3C//DTD Specification::19980910//EN"</SAMP> first results 
+      in the URI <SAMP>spec.dtd</SAMP>. By default, this is remapped to 
+      <SAMP>xmlspec.dtd</SAMP>, but with <SAMP>--catalog-remap=no</SAMP> it 
+      is returned as is.
+    
+    <H4>Catalog syntax and encoding</H4>
+
+    A catalog is used for resolving system identifiers in XML documents. 
+    A system identifier is a URI and may, according to RFC 2396, only contain
+    ASCII characters. Due to an inaccuracy in the XML recommendation, however,
+    arbitrary Unicode characters may occur in system identifiers. Since 
+    system identifiers in catalogs are matched literally, it is desirable to
+    specify them identically both in the catalog and in the XML document.
+    Therefore catalogs are Unicode documents and can be written in all 
+    encodings supported for XML documents. Though XML recommends encoding 
+    non-ASCII characters in system identifiers in UTF-8 and escaping the 
+    resulting bytes in the URI, matching of system identifiers in catalogs 
+    is performed on the Unicode representation. Therefore, system identifier 
+    <SAMP>"entit&eacute;"</SAMP> does not match <SAMP>"entit%C3%A9"</SAMP>, 
+    though both decode to the same URI.
+    <P>
+      Catalogs in Socat syntax, however, have no encoding declaration. Therefore 
+      <I>fxp</I> only checks for a byte-order mark at the beginning of a catalog 
+      in order to auto-detect a UTF-16 encoding. If it doesn't find one it assumes 
+      a default encoding. Because catalogs are usually written by hand, this is
+      by default LATIN1. The <SAMP>--catalog-encoding</SAMP> option tells 
+      <I>fxp</I> to use another default encoding. 
+    <P>
+      <I>fxp</I> tries to guess the syntax of catalog by means of the suffix
+      of its file name. A suffix of <SAMP>.soc</SAMP> or <SAMP>.SOC</SAMP> 
+      suggests to use Socat syntax, whereas for suffixes <SAMP>.xml</SAMP> and 
+      <SAMP>.XML</SAMP> the XML syntax is chosen. For files having none of these 
+      suffices, <I>fxp</I> assumes XML syntax. This can be changed with 
+      <SAMP>--catalog-syntax=soc</SAMP>.
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=CAT-OPT>Summary of Catalog Options</A></H2>
+    <DL>
+      <DT>
+	<SAMP>-C uri</SAMP>
+      <DT>
+	<SAMP>--catalog=uri</SAMP>
+      <DD> 
+	Use <SAMP>uri</SAMP> as a catalog. Several catalogs can be specified 
+	by repeating this option.
+
+      <DT>
+	<SAMP>--catalog-syntax=(soc|xml)</SAMP>
+      <DD>	
+	For catalogs with unknown suffix, specifies whether to assume Socat 
+	syntax or XML syntax. Defaults to <SAMP>xml</SAMP>.
+
+      <DT>
+	<SAMP>--catalog-encoding=enc</SAMP>
+      <DD>	
+	Use encoding <SAMP>enc</SAMP> for reading a catalog unless it starts 
+	with a byte order mark. <SAMP>enc</SAMP> must be a 
+	<A HREF="#ENC">supported</A> encoding. Defaults to 
+	<SAMP>LATIN1</SAMP>.
+
+      <DT>
+	<SAMP>--catalog-remap=[(yes|no)]</SAMP>
+      <DD>
+	Turn on or off support for remapping system identifiers. Defaults to 
+	<SAMP>yes</SAMP>.
+	
+      <DT>
+	<SAMP>--catalog-priority=(map|remap|sys)</SAMP>
+      <DD>
+	Controls the resolving strategy in catalogs. <SAMP>map</SAMP> means 
+	that mapping the public identifier has highest priority; 
+	<SAMP>remap</SAMP> means that remapping the system identifier comes 
+	first; <SAMP>sys</SAMP> means that the catalog is used only if no 
+	system identifier is present. Defaults to <SAMP>map</SAMP>.
+    </DL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <ADDRESS>
+      <A HREF="http://www.informatik.uni-trier.de/~neumann/">A. Neumann</A> 
+      (<A HREF="mailto:neumann@PSI.Uni-Trier.DE">neumann@PSI.Uni-Trier.DE</A>) 
+    </ADDRESS>
+  </BODY>
+</HTML>

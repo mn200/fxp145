@@ -1,0 +1,9 @@
+$(SML_LIB)/basis/basis.mlb
+../Dfa/dfa.mlb
+../../Unicode/Chars/unicode-chars.mlb
+../../Unicode/Uri/uri.mlb
+../Error/error.mlb
+
+baseData.sml
+baseString.sml
+base.sml

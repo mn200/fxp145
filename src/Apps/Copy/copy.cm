@@ -1,0 +1,7 @@
+Group is
+    copy.sml
+    copyEncode.sml
+    copyHooks.sml
+    copyOptions.sml
+    copyOutput.sml
+    ../../fxlib.cm

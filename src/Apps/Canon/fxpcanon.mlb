@@ -1,0 +1,10 @@
+../../Parser/parser.mlb
+../../Catalog/catalog.mlb
+../../Unicode/Encode/encode.mlb
+
+canonOptions.sml
+canonEncode.sml
+canonOutput.sml
+canonHooks.sml
+canon.sml
+mlton-canon.sml

@@ -1,0 +1,695 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>fxp - The Program fxp</TITLE>
+  </HEAD>
+
+  <BODY BGCOLOR=WHITE>
+    <H1>
+      <A HREF="index.html"><IMG ALIGN=MIDDLE BORDER=0 SRC="Images/fxp-shadow.jpg" ALT="fxp"></A>
+      The Program <I>fxp</I>
+    </H1>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#DESC">Description</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA">Options by Example</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#OPT">Summary of Options</A>
+      </TR>
+    </TABLE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=DESC>Description</A></H2>
+    <I>fxp</I> is a validating XML parser. It reads an XML document
+    and reports all well-formedness errors, validity errors and other 
+    errors in that document. It can also warn about interoperability 
+    features and other issues mentioned in the XML recommendation.
+    <P>
+    The typical invocation of <I>fxp</I> is 
+    <BLOCKQUOTE><PRE>fxp [option ...] [infile]</PRE></BLOCKQUOTE>
+    If <SAMP>infile</SAMP> is given, <I>fxp</I> reads its input document
+    from that file, otherwise from standard input. 
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=EXA>Options by Example</A></H2>
+
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-ERR">Controlling Error Printing</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-VAL">Validating and Non-Validating Mode</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-COMP">Compatibility Modes</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-INTER">Interoperability Modes</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA-OTHER">Other Errors and Warnings</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="features.html#CAT-EXA">Catalog Support</A>
+      </TR>
+    </TABLE>
+
+    <H4><A NAME=EXA-ERR>Controlling Error Printing</A></H4>
+    By default <I>fxp</I> reports all errors and warnings to the standard error.
+    This can be controlled by options:
+    <UL>
+      <LI>
+	All messages can be redirected to a file named <SAMP>errfile</SAMP> via the
+	option <SAMP>--error-output=errfile</SAMP> or, for short, <SAMP>-e&nbsp;errfile</SAMP>.
+      <LI>
+	All messages can be suppressed by supplying the <SAMP>--silent</SAMP>
+	option, or <SAMP>-s</SAMP> for short. 
+      <LI>
+	By default, the parser tries avoid printing an error that has already been 
+	printed earlier. E.g., if an attribute is misspelled in the attribute list 
+	declaration, there will be an undeclared-attribute error ech time this
+	attribute is actually specified for an element. Printing of all but the 
+	first of these errors is suppressed. In order to make <I>fxp</I> print this
+	kind of duplicate error messages, use the <SAMP>--few-errors=no</SAMP> option.
+    </UL>
+
+    <H4><A NAME=EXA-VAL>Validating and Non-Validating Mode</A></H4>
+    By default <I>fxp</I> is a validating parser, but it can be run in 
+    non-validating mode with the <SAMP>--validate=no</SAMP> or, for short,
+    <SAMP>-nv</SAMP> option. 
+    This has the following effects:
+    <UL>
+      <LI>only the internal subset of the DTD is parsed and checked for 
+	well-formedness; 
+      <LI>the external subset and all references to external parameter entities 
+	are ignored;
+      <LI>declarations in the internal subset are processed only upto the first  
+	reference to an external parameter entity;
+      <LI>validity constraints are not verified;
+      <LI>no referenced parameter entities are included;
+      <LI>by default, no external parsed general entities are included; 
+	this can be changed with the <SAMP>--include-external</SAMP> option;
+      <LI>all attributes for which no declaration has been processed are assumed 
+	to be declared <SAMP>CDATA</SAMP> with default value <SAMP>#IMPLIED</SAMP>;
+    </UL>
+    For instance, consider an example document 
+    <A HREF="Examples/exa-1.xml"><SAMP>exa-1.xml</SAMP></A>, referencing files 
+    <A HREF="Examples/exa-1.ext"><SAMP>exa-1.ext</SAMP></A>, 
+    <A HREF="Examples/ext.elem"><SAMP>ext.elem</SAMP></A> and 
+    <A HREF="Examples/ext.decl"><SAMP>ext.decl</SAMP></A>.
+    Running 
+    <BLOCKQUOTE><PRE>fxp exa-1.xml</PRE></BLOCKQUOTE> 
+    reports the following errors:
+    <BLOCKQUOTE><PRE>
+[exa-1.xml:17.11] Error: Attribute 'num' has the value 'a' but was declared with
+    a fixed default value of '0'.
+[exa-1.xml:18.12] Error: ID name 'id1' already occurred as an attribute value.
+[exa-1.xml:19.0] Error: Element type 'a' not allowed at this point in the 
+    content of element 'a'.
+[ext.elem:1.11] Error: Attribute 'num' has the value '1' but was declared with a
+    fixed default value of '0'.
+[ext.elem:1.15] Error: Element 'a' was ended by an end-tag for 'b'.
+[exa-1.xml:20.7] Error: Attribute 'nmu' was not declared for element type 'b'.
+[exa-1.xml:20.12] Error: No value was specified for required attribute 'num'.
+[exa-1.xml:20.12] Error: The end-tag for element 'b' with declared EMPTY content
+    must follow immediately after its start-tag.</PRE>
+    </BLOCKQUOTE>
+    whereas the non-validating mode 
+    <BLOCKQUOTE><PRE>fxp -nv exa-1.xml</PRE></BLOCKQUOTE>
+    does not find any errors. 
+    Note that the error at <SAMP>[ext.elem:1.15]</SAMP> is a well-formedness
+    error but is not reported since the external entity reference <SAMP>&amp;ext;</SAMP>
+    in not included. But if we make the parser include external parsed entities:
+    <BLOCKQUOTE><PRE>fxp -nv --include-external exa-1.xml</PRE></BLOCKQUOTE>
+    then the error is reported:
+    <BLOCKQUOTE><PRE>
+[ext.elem:1.15] Error: Element 'a' was ended by an end-tag for 'b'.</PRE>
+    </BLOCKQUOTE>
+
+    <H4><A NAME=EXA-COMP>Compatibility Modes</A></H4>
+    Some features in XML have only been included for compatibility with SGML.
+    These include:
+    <UL>
+      <LI>the string (<SAMP>]]&gt;</SAMP>) may not appear literally in content;
+      <LI>a comment may not contain a double-hyphen (<SAMP>--</SAMP>);
+      <LI>content models must be unambiguous.
+    </UL>
+    By default <I>fxp</I> checks for compatibility and prints errors in case 
+    it is not obeyed. This can be changed with the <SAMP>--compatibility=no</SAMP>
+    or, for short, <SAMP>-nc</SAMP> option. 
+    <P>
+      In non-compatibility mode, however, the parser must handle ambiguous 
+      content models. This implies generation of a deterministic finite state
+      machine (DFA), which may in the worst case have size exponential in the
+      size of the content model. In order to avoid too high space usage, 
+      <I>fxp</I> imposes a limit on the size of the generated DFA. If this limit
+      is exceeded, a warning is printed and the content model is approximated by 
+      <SAMP>(e<SUB>1</SUB>|...|e<SUB>n</SUB>)*</SAMP>,
+      where <SAMP>e<SUB>1</SUB></SAMP>, ..., <SAMP>e<SUB>n</SUB></SAMP> are 
+      all element types occurring in the original model. The new content model
+      is less restrictive but allows for a small DFA. The limit defaults to 256
+      and can be set by the <SAMP>--dfa-max-size</SAMP> option, and the warning 
+      can be suppressed with the <SAMP>--dfa-warn-size=no</SAMP> option.
+    <P>
+      For instance, consider the document 
+      <A HREF="Examples/exa-2.xml"><SAMP>exa-2.xml</SAMP></A>. Note that the
+      content model for element <SAMP>a</SAMP> is ambiguous, and its DFA needs
+      at least 257 states. Running <I>fxp</I> in compatibility mode produces 
+      the following errors:
+    <BLOCKQUOTE><PRE>
+[exa-2.xml:4.65] Error: Content model is ambiguous: conflict between the 1st and
+    the 2nd occurrence of element 'b'. Using an approximation instead.
+[exa-2.xml:10.26] Error: '--' is not allowed in a comment.
+[exa-2.xml:13.26] Error: Character '>' must be escaped for compatibility.</PRE>
+    </BLOCKQUOTE>
+    Note that the empty element tag for <SAMP>a</SAMP> is not an error since
+    <SAMP>a</SAMP>'s content model was approximated. Running in non-compatibility
+    mode:
+    <BLOCKQUOTE><PRE>fxp -nc exa-1.xml</PRE></BLOCKQUOTE>
+    suppressed these errors, but reports the following instead:
+    <BLOCKQUOTE><PRE>
+[exa-2.xml:4.65] Warning: The finite state machine for the content model of 
+    element type 'a' would have more than the maximal allowed number of 256 
+    states. Using an approximation instead.</PRE>
+    </BLOCKQUOTE>
+    This warning can be suppressed by invoking <I>fxp</I> like this:
+    <BLOCKQUOTE><PRE>fxp -nc --dfa-warn-size=no exa-1.xml</PRE></BLOCKQUOTE>
+    But still the invalidity of the empty-element tag for <SAMP>a</SAMP> is
+    not detected. In order to achieve this, we can raise the limit for the
+    DFA's size:
+    <BLOCKQUOTE><PRE>fxp -nc --dfa-max-size=257 exa-1.xml</PRE></BLOCKQUOTE>
+    Now element <SAMP>a</SAMP>'s content can be validated and the error is
+    reported:
+    <BLOCKQUOTE><PRE>
+[exa-2.xml:12.0] Error: Empty-element tag for element type 'a' whose content 
+    model requires non-empty content.</PRE>
+    </BLOCKQUOTE>
+
+    <H4><A NAME=EXA-INTER>Interoperability Modes</A></H4>
+    XML also includes some interoperability recommendations in to allow existing
+    SGML software to process XML documents. These recommendations are 
+    non-binding and therefore not checked for by default. The 
+    <SAMP>--interoperability</SAMP> or, for short, <SAMP>-i</SAMP> option makes
+    <I>fxp</I> run in interoperability-mode, which enables checking for these
+    features. Some of these features can additionally be controlled by individual
+    options.
+    The following table lists the features supported by <I>fxp</I>, together 
+    with the option (if any) that enables or disables them, and whether they
+    are enabled by default if <SAMP>--interoperability</SAMP> is supplied:
+    <BR>
+    <TABLE WIDTH="90%" ALIGN=CENTER>
+      <TR>
+	<TD>Controlling option</TD>
+	<TD ALIGN=CENTER>&nbsp;&nbsp;Default&nbsp;&nbsp;</TD>
+	<TD>Interoperability Feature</TD>
+      <TR VALIGN=TOP>
+	<TD>(none)
+	<TD ALIGN=CENTER>yes</TD>
+	<TD>
+	  The empty element tag must be used and may only be used for elements
+	  declared <SAMP>EMPTY</SAMP>.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-mult-decl=attlist</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  There should be at most one attribute list declaration for each element type.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-mult-decl=att</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  No attribute should be declared twice for the same element type.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD>(none)
+	<TD ALIGN=CENTER>yes</TD>
+	<TD>
+	  The same name token should not occur more than once in the enumerated 
+	  attribute types of a single element type.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-predefined=no</SAMP>
+	<TD ALIGN=CENTER>yes</TD>
+	<TD>
+	  Valid documents should declare the entities <SAMP>amp</SAMP>, <SAMP>lt</SAMP>, 
+	  <SAMP>gt</SAMP>, <SAMP>apos</SAMP> and <SAMP>quot</SAMP>.
+      </TR>
+    </TABLE>
+    Note that all arguments to the <SAMP>--warn-mult-decl</SAMP> option must be
+    specified in a list; see a detailed description <A HREF="#MULT-DECL">here</A>.
+    <P>
+      As example consider the document 
+      <A HREF="Examples/exa-3.xml"><SAMP>exa-3.xml</SAMP></A>. 
+      Running <SAMP>fxp -i exa-3.xml</SAMP> reports the following:
+    <BLOCKQUOTE><PRE>
+[exa-3.xml:10.2] Warning: The following name tokens occur more than once in the 
+    enumerated attribute types of element 'a': 'yes', 'no'.
+[exa-3.xml:10.2] Warning: The predefined entities 'lt', 'gt', 'apos', 'quot' and
+    'amp' should have been declared.
+[exa-3.xml:13.4] Error: An empty-element tag must be used for element type 'a' 
+    with EMPTY declared content.
+[exa-3.xml:15.0] Error: Empty-element tag for element 'b' with non-EMPTY 
+    declared content.</PRE>
+    </BLOCKQUOTE>
+    Now we add some options:
+    <BLOCKQUOTE><PRE>fxp -i --warn-mult-decl=att,attlist --warn-predefined=no exa-3.xml</PRE>
+    </BLOCKQUOTE>
+    The result is that the predefined entities are not checked, but multiple
+    declarations are detected now:
+    <BLOCKQUOTE><PRE>
+[exa-3.xml:9.12] Warning: Repeated attribute-list declaration for element type 
+    'a'.
+[exa-3.xml:9.28] Warning: Repeated definition of attribute 'x' for element type 
+    'a'.
+[exa-3.xml:10.2] Warning: The following name tokens occur more than once in the 
+    enumerated attribute types of element 'a': 'yes', 'no'.
+[exa-3.xml:13.4] Error: An empty-element tag must be used for element type 'a' 
+    with EMPTY declared content.
+[exa-3.xml:15.0] Error: Empty-element tag for element 'b' with non-EMPTY 
+    declared content.</PRE>
+    </BLOCKQUOTE>
+
+    <H4><A NAME=EXA-OTHER>Other Errors and Warnings</A></H4>
+    The following table lists some features from the XML recommendation which can
+    be enabled or disabled by command line options:
+    <BR>
+    <TABLE WIDTH="90%" ALIGN=CENTER>
+      <TR>
+	<TD>Controlling option</TD>
+	<TD ALIGN=CENTER>&nbsp;&nbsp;Default&nbsp;&nbsp;</TD>
+	<TD>Feature</TD>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-att-elem</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  There should be attribute list declarations for declared element types only.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--check-predefined=no</SAMP>
+	<TD ALIGN=CENTER>yes</TD>
+	<TD>
+	  If the predefined entities are declared, this must be according to section
+	  "4.6 Predefined Entities".
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--check-lang-id</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  The values of the attribute <SAMP>xml:lang</SAMP> must be language identifiers 
+	  as defined by IETF RFC 1766, "Tags for the Identification of Languages".
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--check-iso639</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  An ISO-639 Code in a value of the attribute <SAMP>xml:lang</SAMP> must be
+	  a two-letter language code as defined by ISO 639, "Codes for the
+	  representation of names of languages"
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-uri=no</SAMP>
+	<TD ALIGN=CENTER>yes</TD>
+	<TD>
+	  System identifiers are URI's and may only contain ASCII characters, 
+	  according to IETF RFC 2396, "Uniform Resource Identifiers (URI): 
+	  Generic Syntax"
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--check-xml-version=no</SAMP>
+	<TD ALIGN=CENTER>yes</TD>
+	<TD>
+	  Processors may signal an error if they receive documents labeled with
+	  versions they do not support.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-xml-decl</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  XML documents should, begin with an XML declaration which specifies the 
+	  version of XML being used.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-mult-decl=ent</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  An XML processor may issue a warning if entities are declared multiple times.
+	</TD>
+      </TR>
+      <TR VALIGN=TOP>
+	<TD><SAMP>--warn-mult-decl=not</SAMP>
+	<TD ALIGN=CENTER>no</TD>
+	<TD>
+	  Ditto for notations. This is not mentioned in the XML recommendation but sensible. 
+	</TD>
+      </TR>
+    </TABLE>
+    Note that all arguments to the <SAMP>--warn-mult-decl</SAMP> option must be
+    specified in a list; see a detailed description <A HREF="#MULT-DECL">here</A>.
+    <P>
+      For instance, consider the example document 
+      <A HREF="Examples/exa-4.xml"><SAMP>exa-4.xml</SAMP></A>. Running <I>fxp</I>
+      without options produces the following:
+    <BLOCKQUOTE><PRE>
+[exa-4.xml:1.20] Error: XML version '1.1' is not supported.
+[exa-4.xml:12.21] Error: General entity 'amp' must be declared as internal 
+    entity with replacement text '&#38;'.</PRE>
+    </BLOCKQUOTE>
+    We can suppress these messages while making the parser check for the other
+    features listed above by typing:
+    <BLOCKQUOTE><PRE>fxp --warn-att-elem --check-predefined=no --check-lang-id --check-iso639 
+    --check-xml-version=no --warn-mult-decl=ent,not exa-4.xml</PRE></BLOCKQUOTE>
+    The result is:
+    <BLOCKQUOTE><PRE>
+[exa-4.xml:9.32] Error: 'i-' is not a language identifier.
+[exa-4.xml:10.12] Warning: Attribute-list declaration for undeclared element 
+    type 'c'.
+[exa-4.xml:13.25] Warning: Repeated declaration for general entity 'amp'.
+[exa-4.xml:16.45] Warning: Repeated declaration for notation 'text'.
+[exa-4.xml:20.17] Error: 'yy' is not a language identifier.</PRE>
+    </BLOCKQUOTE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=OPT>Summary of Command Line Options</A></H2>
+
+    Each option can be one of:
+    <UL>
+      <LI>A file name specifying the input document. 
+	Only one input document may be specified.
+      <LI>A long option of the form <SAMP>--key[=arg]</SAMP>
+      <LI>A short option of the form <SAMP>-k</SAMP>, where <SAMP>k</SAMP> consists
+	of single character. If <SAMP>k</SAMP> consists of more than one character,
+	each character is assumed to be a short option itself (e.g., <SAMP>-vic</SAMP>
+	equals <SAMP>-v -i -c</SAMP>).
+      <LI>A short option with argument of the form <SAMP>-k arg</SAMP>, where 
+	<SAMP>k</SAMP> consists of a single character.
+      <LI>A negative short option of the form <SAMP>-nk</SAMP>, where <SAMP>k</SAMP> consists
+	of single character. If <SAMP>k</SAMP> consists of more than one character,
+	each character is assumed to be a negative short option itself (e.g., <SAMP>-nvic</SAMP>
+	equals <SAMP>-nv -ni -nc</SAMP>). If <SAMP>k</SAMP> is empty, then we have the 
+	(non-negative) short option  <SAMP>-n</SAMP>. 
+      <LI>The string <SAMP>--</SAMP>. This option is ignored, except that all remaining
+	options are interpreted as file names, whether they start with <SAMP>-</SAMP>
+	or not.
+    </UL>
+    The following options are available (see also the 
+    <A HREF="features.html#CAT-OPT">catalog</A> options):
+ 
+    <DL>
+      <DT>
+	<SAMP>-s</SAMP>
+      <DT>
+	<SAMP>--silent</SAMP>
+      <DD> 
+	Do not print any errors or warnings.
+      <DT>
+	<SAMP>--few-errors=[(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser tries to avoid printing errors caused by 
+	something that already caused an error earlier. E.g., an attribute specification
+	for an attribute not declared for some element will cause an error only at the 
+	first instance of that element with the attribute.
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>yes</SAMP>.
+      <DT>
+	<SAMP>-e fname</SAMP>
+      <DT>
+	<SAMP>--error-output=fname</SAMP>
+      <DD> 
+	Write all errors and warnings to the file named <SAMP>fname</SAMP>. If 
+	<SAMP>fname</SAMP> is <SAMP>-</SAMP>, standard error is used. 
+	Default is <SAMP>-</SAMP>.
+	<P>
+
+      <DT> 
+	<SAMP>--validate[=(yes|no)]</SAMP>
+      <DD>
+	Turns on or off validation. If no argument is given, <SAMP>yes</SAMP> is assumed.
+	Default is <SAMP>yes</SAMP>.
+      <DT>
+	<SAMP>-v</SAMP>
+      <DD>
+	Same as <SAMP>--validate=yes</SAMP>.
+      <DT>
+	<SAMP>-nv</SAMP>
+      <DD>
+	Same as <SAMP>--validate=no</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--compatibility[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks for features that were included 
+	into XML solely for compatibility with SGML. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>yes</SAMP>.
+      <DT>
+	<SAMP>--compat[=(yes|no)]</SAMP>
+      <DD> 
+	Same as <SAMP>--compatibility</SAMP>.
+      <DT>
+	<SAMP>-c</SAMP>
+      <DD>
+	Same as <SAMP>--compatibility=yes</SAMP>.
+      <DT>
+	<SAMP>-nc</SAMP>
+      <DD>
+	Same as <SAMP>--compatibility=no</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--interoperability[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks whether the (non-binding) 
+	recommendations XML makes for enhancing interoperability with existing 
+	SGML software are followed.  
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+      <DT>
+	<SAMP>--interop[=(yes|no)]</SAMP>
+      <DD> 
+	Same as <SAMP>--interoperability</SAMP>.
+      <DT>
+	<SAMP>-i</SAMP>
+      <DD>
+	Same as <SAMP>--interoperability=yes</SAMP>.
+      <DT>
+	<SAMP>-ni</SAMP>
+      <DD>
+	Same as <SAMP>--interoperability=no</SAMP>.
+	<P>
+    </DL>
+	
+    <DL>
+      <DT>
+	<SAMP>--check-reserved[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks whether element names, 
+	attribute names and PI targets are reserved for standardization
+	and thus invalid. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+	<P>
+ 
+      <DT>
+	<SAMP>--check-predefined[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks whether declarations for the 
+	predefined entities (<SAMP>amp</SAMP>, <SAMP>lt</SAMP>, <SAMP>gt</SAMP>,
+	<SAMP>apos</SAMP> and <SAMP>quot</SAMP>) are in accordance to section 4.6
+	in the XML recommendation. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>yes</SAMP>.
+      <DT>
+	<SAMP>--check-predef[=(yes|no)]</SAMP>
+      <DD> 
+	Same as <SAMP>--check-predefined</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--check-lang-id[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks whether values of the 'xml:lang' 
+	attribute are language identifiers as defined in RFC 1776. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+      <DT>
+	<SAMP>--check-iso639[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks whether an ISO language code in a 
+	language identifier is in accordance to ISO 639. Has no effect unless 
+	<SAMP>--check-lang-id=yes</SAMP> was specified. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed.
+	Default is <SAMP>no</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--check-xml-version[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser checks whether the version number in a XML or 
+	text declaration is supported. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>yes</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--warn-uri[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP>, the parser prints a warning for each non-ASCII
+	character occurring in a system literal (URI). If no argument is given, 
+	<SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>yes</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--warn-xml-decl[=(yes|no)]</SAMP>
+      <DD> 
+	Turns on or off a warning if there is no XML declaration. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+
+      <DT>
+	<SAMP>--warn-att-elem[=(yes|no)]</SAMP>
+      <DD> 
+	Turns on or off warnings about attribute list declarations for undeclared elements.
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+
+      <DT>
+	<SAMP>--warn-predefined[=(yes|no)]</SAMP>
+      <DD> 
+	Turns on or off a warning if at least one of the predefined entities 
+	(<SAMP>amp</SAMP>, <SAMP>lt</SAMP>, <SAMP>gt</SAMP>, <SAMP>apos</SAMP> 
+	and <SAMP>quot</SAMP>) are not declared. 
+	Has no effect in non-validating mode or if <SAMP>--interoperability=yes</SAMP> 
+	was not specified. 
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+
+      <DT><A NAME=MULT-DECL></A>
+	<SAMP>--warn-mult-decl[=arg]</SAMP>
+      <DD> 
+	Turns on or off a warning if something is declared multiple times. 
+	<SAMP>arg</SAMP> specifies which declarations this applies to, and must be one of 
+	the following: 
+	<UL>
+	  <LI>A comma-separated list <SAMP>key<SUB>1</SUB>[,key<SUB>2</SUB> ...]</SAMP>, 
+	    where each key is one out of:
+	    <UL>
+	      <LI><SAMP>att</SAMP> 
+		for multiple definitions of an attribute for the same element;
+	      <LI><SAMP>attlist</SAMP> 
+		for multiple attribute list declaration for an element;
+	      <LI><SAMP>ent</SAMP> for multiple declarations of an entity;
+	      <LI><SAMP>not</SAMP> for multiple declarations of a notation.
+	    </UL>
+	  <LI><SAMP>all</SAMP> for all of the keys above;
+	  <LI><SAMP>none</SAMP> for all of the keys above.
+	</UL>
+	<SAMP>att</SAMP> and <SAMP>attlist</SAMP> have no effect unless 
+	<SAMP>--interoperability=yes</SAMP> was specified. 
+	If no argument is given, <SAMP>all</SAMP> is assumed. 
+	Default is <SAMP>none</SAMP>.
+
+      <DT>
+	<SAMP>--warn[=(yes|no)]</SAMP>
+      <DD> 
+	If <SAMP>yes</SAMP> or without argument, equivalent to   
+	<SAMP>--warn-xml-decl --warn-att-elem --warn-predefined --warn-mult-decl=all</SAMP>.
+	<BR>
+	If <SAMP>no</SAMP>, equivalent to 
+	<SAMP>--warn-xml-decl=no --warn-att-elem=no --warn-predefined=no 
+	  --warn-mult-decl=none</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--include-external[=(yes|no)]</SAMP>
+      <DD> 
+	Specifies whether external parsed entity references are included in content or not.
+	Has no effect in validating mode (then all references are included).
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>no</SAMP>.
+      <DT>
+	<SAMP>--include-ext[=(yes|no)]</SAMP>
+      <DD> 
+	Same as <SAMP>--include-external</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>--dfa-initial-size=n</SAMP>
+      <DD> 
+	The transition table of a finite state machine grows dynamically during its
+	creation, i.e., if the table's size is exceeded, it is recreated with double
+	size. This option sets the initial size of the transition table to the next 
+	power of 2 larger or equal to <SAMP>n</SAMP>. 
+	Default is <SAMP>16</SAMP>.
+      <DT>
+	<SAMP>--dfa-initial-width=n</SAMP>
+      <DD> 
+	Same as <SAMP>--dfa-initial-size=2<SUP>n</SUP></SAMP>.
+      <DT>
+	<SAMP>--dfa-max-size=n</SAMP>
+      <DD> 
+	For ambiguous content models the parser generates a deterministic finite 
+	state machine (DFA), which may in the worst case have size exponential in the
+	size of the content model. This option specifies a threshold for the 
+	number of admissible states of the DFA. If it is exceeded, the content
+	model is approximated by the content model 
+	<SAMP>(e<SUB>1</SUB>|...|e<SUB>n</SUB>)*</SAMP>,
+	where <SAMP>e<SUB>1</SUB></SAMP>, ..., <SAMP>e<SUB>n</SUB></SAMP> are 
+	all element types occurring in the original model.
+	Default is <SAMP>256</SAMP>.
+      <DT>
+	<SAMP>--dfa-warn-size[=(yes|no)]</SAMP>
+      <DD> 
+	Turns on or off a warning if the maximal number of states specified by
+	<SAMP>--dfa-max-size</SAMP> is exceeded by the DFA construction for a
+	content model.
+	If no argument is given, <SAMP>yes</SAMP> is assumed. 
+	Default is <SAMP>yes</SAMP>.
+	<P>
+
+      <DT>
+	<SAMP>-?</SAMP>
+      <DT>
+	<SAMP>--help</SAMP>
+      <DD> 
+	Print a summary of the command line options and exit. 
+    </DL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <ADDRESS>
+      <A HREF="http://www.informatik.uni-trier.de/~neumann/">A. Neumann</A> 
+      (<A HREF="mailto:neumann@PSI.Uni-Trier.DE">neumann@PSI.Uni-Trier.DE</A>) 
+    </ADDRESS>
+  </BODY>
+</HTML>

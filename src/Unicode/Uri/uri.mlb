@@ -1,0 +1,7 @@
+$(SML_LIB)/basis/basis.mlb
+../Chars/unicode-chars.mlb
+../../config.sml
+uriDecode.sml
+uriEncode.sml
+uri.sml
+uriDict.sml

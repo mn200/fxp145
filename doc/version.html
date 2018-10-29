@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>fxp - Current Version</TITLE>
+  </HEAD>
+
+  <BODY BGCOLOR=WHITE>
+    <H1>
+      <A HREF="index.html"><IMG ALIGN=MIDDLE BORDER=0 SRC="Images/fxp-shadow.jpg" ALT="fxp"></A>
+      Current Version
+    </H1>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=CURRENT>Current Version</A></H2>
+    The current version of <I>fxp</I> is 1.4.1 
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H4>Changes from version 1.4 to <A NAME="1.4.1">1.4.1</A> (June 8, 2000)</H4> 
+    <UL>
+      <LI>Sample applications now report whether an error is fatal;
+      <LI>Bug fixes.
+    </UL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H4>Changes from version 1.3 to <A NAME="1.4">1.4</A> (February 18, 2000)</H4> 
+    <UL>
+      <LI>Improved handling of wrong end-tags/invalid character data
+      <LI>Slight change in the programming interface;
+      <LI>Shorter option summaries;
+      <LI>Entity manager functions cleaned up; 
+      <LI>Minor bug fixes.
+    </UL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H4>Changes from version 1.2 to <A NAME="1.3">1.3</A> (August 24, 1999)</H4> 
+    <UL>
+      <LI>Speedup of the Unicode interface;
+      <LI>New command-line option --warn-uri for non-ASCII characters in URIs;
+      <LI>Removed --table-size/width options;
+      <LI>Substantial changes to parser internals;
+      <LI>Bug-fixes:
+	<UL>
+	  <LI>handling of surrogate pairs;
+	  <LI>delay of declaredness-check for notation names in entity 
+	    declarations until the end of the DTD;
+	  <LI>Unicode interface: UTF-8 and UCS-4 do not recognize surrogate-pairs.
+	    UCS2 is UTF16 without surrogates. 
+	</UL>
+    </UL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H4>Changes from version 1.1 to <A NAME="1.2">1.2</A> (June 7, 1999)</H4> 
+    <UL>
+      <LI>Added a new sample application fxviz;
+      <LI>Removed options <SAMP>--no-output</SAMP> and <SAMP>-n</SAMP>.
+      <LI>Added support for retrieval of external entities over the internet;
+      <LI>Added support for XML catalog syntax.
+      <LI>Slight changes to the programming interface (undocumented);
+      <LI>Fixed a bug that made fxp exit with uncaught exception NoSuchEntry
+	if an unknown encoding was specified.
+      <LI>Partially redesigned the module hierarchy. 
+      <LI>fxp is now a reentrant parser.
+    </UL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H4>Changes from version 1.0 to 1.1 (March 29, 1999)</H4> 
+    <UL>
+      <LI>Added a new sample application fxcanon.
+      <LI>Added support for Socat syntax of XCatalog (XML syntax to come). 
+      <LI>Improved error reporting; the reported position is now - whenever 
+	possible - the first character of the concerned item.
+      <LI>Improved strategy for handling wrong end-tags:
+	<UL>
+	  <LI>if the end-tag is for the current element, consume it and finish
+	    the element;
+	  <LI>otherwise, if the end-tag is for an open element, assume the 
+	    end-tag for the current element was forgotten, thus finish the 
+	    current element but retain the end-tag;
+	  <LI>otherwise, if the current element requires further content in 
+	    order to satisfy its content model, ignore the end-tag;
+	  <LI>otherwise consume the end-tag and finish the current element.
+	</UL>
+      <LI>Reimplemented the Unicode frontend. UTF-7 is no longer supported.
+      <LI>Redesign of the module structure.
+      <LI>Slight changes to the programming interface.
+      <LI><I>fxcopy</I> now reproduces white space in the prolog and between
+	declarations literally.
+      <LI>Major bug fixes:
+	<UL>
+	  <LI>comparison of fixed attribute values is now correct;
+	  <LI>characters U+10000-U+FFFFF were reported not to be unicode; 
+	    characters U+FFFE and U+FFFF were accepted;
+	  <LI>parser complained about character <SAMP>&gt;</SAMP> in content 
+	    even if it was not part of the sequence <SAMP>]]&gt;</SAMP>;
+	  <LI>whitespace normalization in attribute values also affected 
+	    characters that were escaped by a char reference;
+	  <LI>end-of-line normalization was done for the replacement text 
+	    of internal entities instead of the literal entity value; 
+	  <LI>default values in attlist declarations are now checked only for 
+	    lexical validity; declaredness of notation/entity names is now 
+	    checked when the default value is used.
+	</UL>
+    </UL>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <ADDRESS>
+      <A HREF="http://www.informatik.uni-trier.de/~neumann/">A. Neumann</A> 
+      (<A HREF="mailto:neumann@PSI.Uni-Trier.DE">neumann@PSI.Uni-Trier.DE</A>) 
+    </ADDRESS>
+  </BODY>
+</HTML>

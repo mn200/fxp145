@@ -1,0 +1,9 @@
+$(SML_LIB)/basis/basis.mlb
+../../Unicode/Chars/unicode-chars.mlb
+../../Unicode/Decode/decode.mlb
+errorData.sml
+errorString.sml
+errorMessage.sml
+errorUtil.sml
+expected.sml
+errors.sml

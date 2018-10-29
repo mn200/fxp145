@@ -1,0 +1,9 @@
+use "dfaData.sml";
+use "dfaError.sml";
+use "dfaUtil.sml";
+use "dfaPassOne.sml";
+use "dfaPassTwo.sml";
+use "dfaString.sml";
+use "dfaOptions.sml";
+use "dfaPassThree.sml";
+use "dfa.sml";

@@ -1,0 +1,15 @@
+$(SML_LIB)/basis/basis.mlb
+../Dfa/dfa.mlb
+../Dtd/dtd.mlb
+
+parseBase.sml
+parseNames.sml
+parseMisc.sml
+parseXml.sml
+parseRefs.sml
+parseLiterals.sml
+parseTags.sml
+parseDecl.sml
+parseDtd.sml
+parseContent.sml
+parseDocument.sml

@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <TITLE>fxp - The Program fxesis</TITLE>
+  </HEAD>
+
+  <BODY BGCOLOR=WHITE>
+    <H1>
+      <A HREF="index.html"><IMG ALIGN=MIDDLE BORDER=0 SRC="Images/fxp-shadow.jpg" ALT="fxp"></A>
+      The Program <I>fxesis</I>
+    </H1>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+    <TABLE CELLSPACING=0 CELLPADDING=0>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#DESC">Description</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#OUT">Output Format</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#OUTEX">Output Example</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#EXA">Options by Example</A>
+      </TR>
+      <TR>
+	<TD><IMG SRC="Images/ball-shadow.jpg" ALT="o">
+	<TD><A HREF="#OPT">Summary of Options</A>
+      </TR>
+    </TABLE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=DESC>Description</A></H2>
+
+    <I>fxesis</I> is a validating XML processor. It reads an XML document
+    and produces a textual description of its Element Structure Information Set
+    (ESIS). This contains only little information about the DTD, and no information
+    about the document's entity structure, but provides all information about 
+    the document's logical (element) structure.
+    <P>
+    The typical invocation of <I>fxesis</I> is 
+    <BLOCKQUOTE><PRE>fxesis [option ...] [infile]</PRE></BLOCKQUOTE>
+    If <SAMP>infile</SAMP> is given, <I>fxesis</I> reads its input document
+    from that file, otherwise from standard input. By default, it prints
+    its output to the standard output.
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=OUT>The Output Format</A></H2>
+    The <I>fxesis</I> output is a series of plain text lines. The meaning of 
+    each line is determined by its first character. Some lines, e.g. attribute 
+    specifications, define arguments for a following line. All lines contain
+    only LATIN1 characters, or, if the <A HREF="#EXA-ENC"><SAMP>--ascii</SAMP></A>
+    option was given, ASCII characters. In order to print other characters 
+    <I>fxesis</I> uses escape sequences with the following meaning:
+
+    <BLOCKQUOTE>
+      <TABLE CELLSPACING=0 CELLPADDING=0>
+	<TR>
+	  <TD NOWRAP=NOWRAP><SAMP>\\</SAMP>
+	  <TD>the character '<SAMP>\</SAMP>';
+	<TR>
+	  <TD NOWRAP=NOWRAP><SAMP>\n</SAMP>
+	  <TD>a newline character;
+	<TR>
+	  <TD NOWRAP=NOWRAP><SAMP>\t</SAMP>
+	  <TD>a tab character;
+	<TR>
+	  <TD NOWRAP=NOWRAP><SAMP>\U+<I>hex</I>;</SAMP>&nbsp;&nbsp;
+	  <TD>the Unicode character whose hexadecimal code is <I>hex</I>.
+      </TABLE>
+    </BLOCKQUOTE>
+    
+    The following output lines can appear:
+    <BLOCKQUOTE>
+      <TABLE>
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>-</SAMP><I>data</I>
+	  <TD>
+	    A sequence of data characters, including newlines. 
+	    The data need not have been contiguous in the input document,
+	    but may have consisted of a series of data characters, CDATA 
+	    sections and character references, interspersed with comments.
+
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>(</SAMP><I>elem</I>
+	  <TD>
+	    The start of an element of type <I>elem</I>. Preceded by 
+	    an <SAMP>A</SAMP> line for each of its attributes.
+
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>)</SAMP><I>elem</I>
+	  <TD>
+	    The end of an element of type <I>elem</I>.
+
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>A</SAMP><I>att</I> <I>value</I>
+	  <TD>
+	    A specification of attribute <I>att</I> for a following 
+	    <SAMP>(</SAMP> (element-start) line. <I>value</I> is one
+	    out of:
+	    <TABLE CELLSPACING=0 CELLPADDING=0>
+	      <TR VALIGN=TOP>
+		<TD NOWRAP=NOWRAP><SAMP>IMPLIED</SAMP></TD>
+		<TD>
+		  The attribute value was implied. This is used only in 
+		  validating mode only.
+	      <TR VALIGN=TOP>
+		<TD NOWRAP=NOWRAP><SAMP>CDATA </SAMP><I>data</I></TD>
+		<TD>
+		  The attribute was declared <SAMP>CDATA</SAMP>; its value
+		  is <I>data</I>.
+	      <TR VALIGN=TOP>
+		<TD NOWRAP=NOWRAP><SAMP>NOTATION </SAMP><I>name</I></TD>
+		<TD>
+		  A notation attribute with value <I>name</I>; 
+		  that notation was defined in a previous <SAMP>N</SAMP> 
+		  (notation definition) line.
+	      <TR VALIGN=TOP>
+		<TD NOWRAP=NOWRAP><SAMP>ENTITY </SAMP><I>name</I><SAMP> ...</SAMP></TD>
+		<TD>
+		  An attribute with declared type <SAMP>ENTITY</SAMP> or 
+		  <SAMP>ENTITIES</SAMP>. Each <I>name</I> is the name 
+		  of an unparsed general entity that was defined in a preceding 
+		  <SAMP>E</SAMP> (entity definition) line. 
+	      <TR VALIGN=TOP>
+		<TD NOWRAP=NOWRAP><SAMP>TOKEN </SAMP><I>token</I><SAMP> ...</SAMP></TD>
+		<TD>
+		  An attribute with declared type <SAMP>NMTOKEN</SAMP>, 
+		  <SAMP>NMTOKENS</SAMP>, <SAMP>ID</SAMP>, <SAMP>IDREF</SAMP>, 
+		  <SAMP>IDREFS</SAMP>, or enumeration. Each <I>token</I> 
+		  is a name token complying with the attribute type. 
+	    </TABLE>
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>?</SAMP><I>target</I> <I>text</I>
+	  <TD>
+	    A processing instruction with target <I>target</I> and 
+	    text <I>text</I>.
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>E</SAMP><I>ent</I><SAMP> NDATA </SAMP><I>nt</I>
+	  <TD>
+	    Defines an unparsed external entity named <I>ent</I> whose
+	    notation is <I>nt</I> and has been defined by a preceding
+	    <SAMP>N</SAMP> (notation definition) line. This line is immediately
+	    preceded by an optional <SAMP>p</SAMP> (public identifier) line, 
+	    an <SAMP>s</SAMP> (system identifier) line and, if a filename could
+	    be generated, an <SAMP>f</SAMP> (filename) line for the external
+	    identifier declared for <I>ent</I>. An entity is defined
+	    by an <SAMP>E</SAMP> line only once per document.
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>N</SAMP><I>nt</I>
+	  <TD>
+	    Defines the notation named <I>nt</I>. This line is immediately
+	    preceded by an optional <SAMP>p</SAMP> (public identifier) line and 
+	    an optional <SAMP>s</SAMP> (system identifier) line for the external
+	    identifier declared for <I>nt</I>. A notation is defined
+	    by an <SAMP>N</SAMP> line only once per document.
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>p</SAMP><I>pubid</I>
+	  <TD>
+	    <I>pubid</I> is the public identifier belonging to the external 
+	    identifier of a following <SAMP>N</SAMP> (notation definition)
+	    or <SAMP>E</SAMP> (entity definition). 
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>s</SAMP><I>sysid</I>
+	  <TD>
+	    <I>sysid</I> is the system identifier belonging to the external 
+	    identifier of a following <SAMP>N</SAMP> (notation definition)
+	    or <SAMP>E</SAMP> (entity definition). 
+	<TR VALIGN=TOP>
+	  <TD NOWRAP=NOWRAP><SAMP>f&lt;OSFILE&gt;</SAMP><I>filename</I>
+	  <TD>
+	    <I>filename</I> is the system file name generated for the external 
+	    identifier of a following <SAMP>E</SAMP> (entity definition). 
+      </TABLE>
+    </BLOCKQUOTE>
+    
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+      
+    <H2><A NAME=OUTEX>An Output Example</A></H2>
+    Consider the example document 
+    <A HREF="Examples/exa-5.xml"><SAMP>exa-5.xml</SAMP></A>.
+    The <I>fxesis</I> output, if called without options, for this document is 
+    <A HREF="Examples/exa-5.esis-8"><SAMP>exa-5.esis-8</SAMP></A>.
+    Note that all the adjacent data segments of the first <SAMP>a</SAMP> element
+    are merged into one; note also that there is an <SAMP>A</SAMP> line for
+    each implied attribute. Furthermore, notation <SAMP>man</SAMP> is not redefined
+    at its second occurrence.
+    <P>
+      Opposed to that, <SAMP>fxesis -7 -nv exa-5.xml</SAMP>
+      produces the output in 
+      <A HREF="Examples/exa-5.esis-7"><SAMP>exa-5.esis-7</SAMP></A>.
+      Note the difference: on the one hand, no <SAMP>A</SAMP> lines are printed 
+      for implied attribute, because validation was turned off. On the other hand, 
+      characters <SAMP>&ouml;</SAMP>, <SAMP>&uuml;</SAMP> and <SAMP>&szlig;</SAMP>
+      are represented by escape sequences, because they are not ASCII-characters.
+      
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=EXA>Options by Example</A></H2>
+    
+    <I>fxesis</I> understands all options documented for 
+    <A HREF="fxp.html#EXA"><I>fxp</I></A>; the additional options 
+    control how output is generated.
+    <P>
+      By default, <I>fxesis</I> writes its output to the standard output.
+      It can be redirected to a file named <SAMP>outfile</SAMP> via the
+      option <SAMP>--output=outfile</SAMP> or, for short, <SAMP>-o&nbsp;outfile</SAMP>.
+
+    <H4><A NAME=EXA-ENC>Output Encoding</A></H4>
+    By default, <I>fxesis</I> produces its output in the LATIN1 character set,
+    i.e., using 8-bit characters. It can be restricted to using only 7-bit characters
+    with the <SAMP>--ascii</SAMP> or, for short, <SAMP>-7</SAMP> option. 
+    For instance, consider the element 
+    <BLOCKQUOTE><PRE>
+&lt;addr city="K&ouml;ln"&gt;M&uuml;llerstra&szlig;e 13&lt;/addr&gt;</PRE>
+    </BLOCKQUOTE>
+    Called with <SAMP>fxesis -8 ...</SAMP>, the output for this element is
+    <BLOCKQUOTE><PRE>
+Acity CDATA K&ouml;ln
+(addr
+-M&uuml;llerstra&szlig;e 13
+)addr</PRE>
+    </BLOCKQUOTE>
+    whereas <SAMP>fxesis -7 ...</SAMP> outputs the following:
+    <BLOCKQUOTE><PRE>
+Acity CDATA K\U+f6;ln
+(addr
+-M\U+fc;llerstra\U+df;e 13
+)addr</PRE>
+    </BLOCKQUOTE>
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <H2><A NAME=OPT>Summary of Command Line Options</A></H2>
+
+    Each option can be one of:
+    <UL>
+      <LI>A file name specifying the input document. 
+	Only one input document may be specified.
+      <LI>A long option of the form <SAMP>--key[=arg]</SAMP>
+      <LI>A short option of the form <SAMP>-k</SAMP>, where <SAMP>k</SAMP> consists
+	of single character. If <SAMP>k</SAMP> consists of more than one character,
+	each character is assumed to be a short option itself (e.g., <SAMP>-vic</SAMP>
+	equals <SAMP>-v -i -c</SAMP>).
+      <LI>A short option with argument of the form <SAMP>-k arg</SAMP>, where 
+	<SAMP>k</SAMP> consists of a single character.
+      <LI>A negative short option of the form <SAMP>-nk</SAMP>, where <SAMP>k</SAMP> consists
+	of single character. If <SAMP>k</SAMP> consists of more than one character,
+	each character is assumed to be a negative short option itself (e.g., <SAMP>-nvic</SAMP>
+	equals <SAMP>-nv -ni -nc</SAMP>). If <SAMP>k</SAMP> is empty, then we have the 
+	(non-negative) short option  <SAMP>-n</SAMP>. 
+      <LI>The string <SAMP>--</SAMP>. This option is ignored, except that all remaining
+	options are interpreted as file names, whether they start with <SAMP>-</SAMP>
+	or not.
+    </UL>
+    
+    <I>fxesis</I> understands all options documented for 
+    <A HREF="fxp.html#OPT"><I>fxp</I></A>; additionally, the following 
+    options are available:
+
+    <DL>
+      <DT><SAMP>-o fname</SAMP>
+      <DT><SAMP>--output=fname</SAMP>
+      <DD>
+	Write all output, except for errors and warnings, to the file named 
+	<SAMP>fname</SAMP>. If <SAMP>fname</SAMP> is <SAMP>-</SAMP>, the 
+	standard output is used. 
+	Defaults to -.
+	<P>
+
+      <DT><SAMP>-7</SAMP>
+      <DT><SAMP>--ascii</SAMP>
+      <DD>	
+	Produce the output in ASCII encoding, i.e., using 7-bit characters only.
+      <DT><SAMP>-8</SAMP>
+      <DT><SAMP>--latin1</SAMP>
+      <DD>
+	Produce output in Latin1 encoding, i.e., using 8-bit characters also. 
+	This is the default.
+    </DL>
+    
+
+    <P><IMG SRC="Images/shadow.jpg" WIDTH="100%" ALT="----------------">
+
+    <ADDRESS>
+      <A HREF="http://www.informatik.uni-trier.de/~neumann/">A. Neumann</A> 
+      (<A HREF="mailto:neumann@PSI.Uni-Trier.DE">neumann@PSI.Uni-Trier.DE</A>) 
+    </ADDRESS>
+  </BODY>
+</HTML>
