@@ -6,6 +6,8 @@ by
 - Andreas Neumann, University of Trier <neumann@psi.uni-trier.de>
 - Alexandru Berlea, University of Trier <aberlea@psi.uni-trier.de>
 
+[Includes minor updates by Michael Norrish in 2018 to get this code to compile under mlton and Poly/ML.]
+
 ## What is fxp?
 
 fxp is a validating XML parser, written completely in the functional
@@ -42,6 +44,26 @@ some example applications:
     as input to Georg Sander's vcg.
 
 ## Installation
+
+### MLton
+
+Using the [`mlton`](http://mlton.org) compiler, just change to the directory containing the desired executable, and type
+
+    mlton <appname>.mlb
+
+For example, in `src/Apps/Canon`, type
+
+    mlton fxpcanon.mlb
+
+and an `fxpcanon` executable will be created.
+
+### Poly/ML
+
+With a recent [Poly/ML](http://polyml.org) installation, you should have access to the `polyc` command. Change to the relevant directory and compiler the `poly-use.ML` script, specifying the desired executable name on the command-line. For example, in `src/Apps/Canon`:
+
+    polyc -o fxpcanon poly-use.ML
+
+### SML/NJ Instructions (original)
 
 In order to install fxp, you need an SML compiler. It has been tested with
 version 110.0.6 of SML of New Jersey, but it might also run with other
@@ -107,14 +129,7 @@ These are the steps for installing fxp under Unix:
    parsing errors. If you don't need URI retrieval, use "exit 1"
    which always fails on Unix. Sensible values are, e.g:
 
-     - `"wget -qO %2 %1"`
-       (ftp://gnjilux.cc.fer.hr/pub/unix/util/wget/)
-     - `"got_it -o %2 %1"`
-       (ftp://sunsite.unc.edu/pub/Linux/apps/www/
-                       mirroring/got_it-0.34.tar.gz)
-     - `"urlget -s -o %2 %1"`
-        (ftp://sunsite.unc.edu/pub/Linux/apps/www/
-                       mirroring/urlget-3.12.tar.gz)
+     - `"wget -qO %2 %1"` (https://www.gnu.org/software/wget/)
 
 6. Compile fxp by typing `make`;
 7. Install fxp by typing `make install`.
@@ -123,6 +138,6 @@ These are the steps for installing fxp under Unix:
 
 If you experience problems installing fxp, send me mail at aberlea@psi.uni-trier.de
 
-Check out for new versions at http://www.informatik.uni-trier.de/~aberlea/Fxp.
+Check out for new versions at `http://www.informatik.uni-trier.de/~aberlea/Fxp` (old, now stale, link)
 
 Alexandru Berlea.
