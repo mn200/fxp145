@@ -1,0 +1,10 @@
+../../Parser/parser.mlb
+../../Catalog/catalog.mlb
+../../Unicode/Encode/encode.mlb
+
+copyOptions.sml
+copyEncode.sml
+copyOutput.sml
+copyHooks.sml
+copy.sml
+mlton-copy.sml
